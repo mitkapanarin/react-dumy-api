@@ -20,6 +20,7 @@ const UserDetails = () => {
           <h1>
             {title} {firstName} {lastName}
           </h1>
+          <img src={picture} alt={`${firstName} ${lastName}`} />
         </>
       )}
     </div>
