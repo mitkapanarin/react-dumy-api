@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 // import { axiosInstance } from "../axios/axiosHttcop";
 import Cards from "../components/Cards";
-import { useGetAllUsersQuery } from "../store/api/userApi";
+import { useGetAllUsersQuery, useCreateUserMutation } from "../store/api/userApi";
 import Pagination from "../components/Pagination";
+import CreateUserModal from "../components/CreateUserModal";
 
-const Home = () => {
+const Home = ({id, firstName, lastName, email, title}) => {
   const [page, setPage] = useState({
     current: 0,
     total: 0,
@@ -26,8 +27,37 @@ const Home = () => {
     });
   }, [data]);
 
+  const [createUser] =   useCreateUserMutation();
+
+  const [User, setUser] = useState({
+    title: "",
+    firstName: "",
+    lastName: "",
+    email: ""
+  });
+
+  const handleChangeCreate = (e) => {
+    console.log(User);
+    setUser({
+      ...User,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmitCreate = async (e) => {
+    e.preventDefault();
+    try {
+      await createUser(User);
+      console.log("User created successfully");
+    } catch (error) {
+      console.error("Failed to create user", error);
+    }
+  };
+
+
   return (
     <div className="container">
+      <CreateUserModal handleChangeCreate={handleChangeCreate} handleSubmitCreate={handleSubmitCreate} id={id}/>
       <Pagination page={page} setPage={setPage} />
       <div className="card-parent">
         {isLoading

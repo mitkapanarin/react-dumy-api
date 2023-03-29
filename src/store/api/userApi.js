@@ -40,11 +40,19 @@ export const userApi = createApi({
         body: body
       }),
       invalidatesTags: ["Users"],
-    })
+    }),
 
+    updateUser: builder.mutation({
+      query:({body, id}) => ({
+        url: `/user/${id}`,
+        method: "PUT",
+        body: body
+      }),
+      invalidatesTags: ["Users"],
+    }),
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAllUsersQuery, useDeleteUserMutation, useGetOneUserQuery, useCreateUserMutation } = userApi;
+export const { useGetAllUsersQuery, useDeleteUserMutation, useGetOneUserQuery, useCreateUserMutation, useUpdateUserMutation } = userApi;

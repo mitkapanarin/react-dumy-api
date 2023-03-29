@@ -9,14 +9,14 @@ const Pagination = ({ page, setPage }) => {
   return (
     <nav aria-label="Page navigation example">
       <ul className="pagination">
-        <li className="page-item">
+        <li onClick={()=>setPage({...page, current: page.current-1})} className="page-item">
           <a className="page-link" href="#">
             Previous
           </a>
         </li>
         {pageNumbers?.map((item) => {
           return (
-            <li key={nanoid()} onClick={()=>setPage({...page, current: item})} className="page-item">
+            <li key={nanoid()} onClick={()=>setPage({...page, current: item})} className={`page-item ${page.current === item && 'active'}`}>
               <a className="page-link" href="#">
                 {item}
               </a>
@@ -24,7 +24,7 @@ const Pagination = ({ page, setPage }) => {
           );
         })}
         <li className="page-item">
-          <a className="page-link" href="#">
+          <a onClick={()=>setPage({...page, current: page.current+1})} className="page-link" href="#">
             Next
           </a>
         </li>

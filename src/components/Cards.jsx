@@ -1,20 +1,19 @@
 import React, { useState } from "react";
-import { axiosInstance } from "../axios/axiosHttp";
 import {
   useDeleteUserMutation,
-  useCreateUserMutation,
+  useUpdateUserMutation
 } from "../store/api/userApi";
 import { useNavigate, Link } from "react-router-dom";
-import UserModal from "./UserModal";
+import EditModal from "./EditModal";
 
 const Cards = ({ id, firstName, lastName, picture, title }) => {
   const [deleteUser, { isLoading }] = useDeleteUserMutation();
-  const [createUser] = useCreateUserMutation();
+  const [updateUser] =   useUpdateUserMutation();
 
   const [newUser, setNewUser] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
+    title: title,
+    firstName: firstName,
+    lastName: lastName,
   });
 
   const handleChange = (e) => {
@@ -28,13 +27,17 @@ const Cards = ({ id, firstName, lastName, picture, title }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createUser(newUser);
+      await updateUser({
+        body: newUser,
+        id: id
+      });
       console.log("User created successfully");
     } catch (error) {
       console.error("Failed to create user", error);
     }
   };
 
+  
   const navigate = useNavigate();
 
   const deleteCard = async () => {
@@ -55,7 +58,7 @@ const Cards = ({ id, firstName, lastName, picture, title }) => {
           </h5>
           <button onClick={deleteCard}>Delete</button>
           <button onClick={() => navigate(`/users/${id}`)}>View</button>
-          <UserModal handleChange={handleChange} handleSubmit={handleSubmit} />
+          <EditModal handleChange={handleChange} handleSubmit={handleSubmit} newUser={newUser} id={id}/>
         </div>
       </div>
     </div>
