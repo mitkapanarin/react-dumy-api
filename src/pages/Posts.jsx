@@ -9,19 +9,19 @@ const Posts = () => {
     total: 0,
   });
   console.log(page);
-  const { data, error, isLoading } = useGetAllPostsQuery();
+  const { data, error, isLoading } = useGetAllPostsQuery(page.current);
   console.log(data);
 
-  // useEffect(() => {
-  //   setPage({
-  //     ...page,
-  //     total: Math.ceil(data?.total/10)  || 0,
-  //   });
-  // }, [data]);
+  useEffect(() => {
+    setPage({
+      ...page,
+      total: Math.ceil(data?.total/10)  || 0,
+    });
+  }, [data]);
 
   return (
     <div className="container">
-      {/* <Pagination page={page} setPage={setPage} /> */}
+      <Pagination page={page} setPage={setPage} />
       <div className="card-parent">
         {isLoading
           ? "loading please wait"

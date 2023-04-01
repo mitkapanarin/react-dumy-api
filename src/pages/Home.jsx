@@ -27,7 +27,7 @@ const Home = ({id, firstName, lastName, email, title}) => {
     });
   }, [data]);
 
-  const [createUser] =   useCreateUserMutation();
+  const [createUser] = useCreateUserMutation();
 
   const [User, setUser] = useState({
     title: "",

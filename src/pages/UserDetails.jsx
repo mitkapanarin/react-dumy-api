@@ -1,7 +1,6 @@
 import React from "react";
 import { useGetOneUserQuery } from "../store/api/userApi";
 import { useParams } from "react-router-dom";
-import Cards from "../components/Cards";
 
 const UserDetails = () => {
   const params = useParams();
